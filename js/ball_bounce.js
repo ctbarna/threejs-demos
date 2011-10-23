@@ -45,6 +45,7 @@ camera.rotation.x = -0.1;
 renderer.setSize(WIDTH, HEIGHT);
 renderer.setClearColor(0x000000, 1);
 renderer.clear();
+renderer.shadowMapEnabled = true;
 
 // Attach the DOM element.
 $container.append(renderer.domElement);
@@ -56,6 +57,8 @@ var cube = new THREE.Mesh(new THREE.CubeGeometry(150, 10, 150),
                       }));
 scene.add(cube);
 THREE.Collisions.colliders.push( THREE.CollisionUtils.MeshOBB( cube ));
+cube.receiveShadow = true;
+// cube.castShadow = true;
 
 // Ball (will bounce!)
 var radius = 15, segments = 20, rings = 16;
@@ -69,14 +72,19 @@ var sphere = new THREE.Mesh(
                           rings),
   sphereMaterial);
 sphere.position.y = 250;
+sphere.castShadow = true;
 scene.add(sphere);
 
 // Lights
 var pointLight = new THREE.PointLight(0xFFFFFF);
 pointLight.position.y = 200;
-// pointLight.position.x = 100;
 pointLight.position.z = 100;
 scene.add(pointLight);
+
+var pointLight1 = new THREE.SpotLight(0xFFFFFF, .7);
+pointLight1.position.y = 500;
+pointLight1.castShadow = true;
+scene.add(pointLight1);
 
 // The animation function.
 var a = 0.1;
