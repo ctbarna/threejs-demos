@@ -44,15 +44,11 @@ camera.position.z = 300;
 // camera.rotation.x = -Math.sin(Math.PI / 6);
 
 $("body").mousemove(function (event) {
-  var x_ratio = (event.pageX / window.innerWidth)-.5;
+  var x_ratio = (event.pageX / window.innerWidth) - 0.5;
 
   camera.position.x = Math.sin(x_ratio * Math.PI) * 400;
   camera.position.z = Math.cos(x_ratio * Math.PI) * 400;
-  // camera.rotation.y = Math.sin((x_ratio * Math.PI)/2);
   camera.rotation.y = Math.sin(x_ratio * Math.PI);
-
-  // camera.rotation.y = Math.sin(x_ratio * Math.PI);
-  // camera.rotation.z = Math.sin(x_ratio * Math.PI);
 });
 
 // Start the renderer.
