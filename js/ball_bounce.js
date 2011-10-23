@@ -4,7 +4,7 @@
  **/
 
 // @see http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-window.requestAnimFrame = (function(){
+window.requestAnimFrame = (function () {
   return  window.requestAnimationFrame       ||
           window.webkitRequestAnimationFrame ||
           window.mozRequestAnimationFrame    ||
@@ -38,7 +38,7 @@ var scene = new THREE.Scene();
 
 camera.position.z = 700;
 camera.position.y = 300;
-camera.rotation.x = -.1;
+camera.rotation.x = -0.1;
 // camera.rotation.x = Math.sin(Math.PI / 4);
 
 // Start the renderer.
@@ -55,7 +55,7 @@ var cube = new THREE.Mesh(new THREE.CubeGeometry(150, 10, 150),
                         color: 0x00FF00
                       }));
 scene.add(cube);
-THREE.Collisions.colliders.push( THREE.CollisionUtils.MeshOBB( cube ) );
+THREE.Collisions.colliders.push( THREE.CollisionUtils.MeshOBB( cube ));
 
 // Ball (will bounce!)
 var radius = 15, segments = 20, rings = 16;
@@ -91,12 +91,12 @@ function update() {
     v.y += (v.y * a);
   }
 
-  if (v.y < .9 && v.y > 0) {
+  if (v.y < 0.9 && v.y > 0) {
     v.y = -v.y;
   }
 
   if (c && Math.floor(c.distance) <= radius) {
-    v.y = -v.y*(.9);
+    v.y = -v.y * (0.9);
   }
 
   sphere.position.addSelf(v);
