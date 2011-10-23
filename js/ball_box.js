@@ -17,8 +17,8 @@ window.requestAnimFrame = (function(){
 })();
 
 // Scene size
-var WIDTH = 400,
-  HEIGHT = 300;
+var WIDTH = window.innerWidth,
+  HEIGHT = window.innerHeight;
 
 // Camera attributes.
 var VIEW_ANGLE = 45,
@@ -38,17 +38,23 @@ var camera = new THREE.PerspectiveCamera(VIEW_ANGLE,
 var scene = new THREE.Scene();
 
 // Move the camera
-camera.position.z = 300;
+camera.position.z = 600;
 // camera.position.y = 200;
 
 // camera.rotation.x = -Math.sin(Math.PI / 6);
 
-$("body").mousemove(function (event) {
-  var x_ratio = (event.pageX / window.innerWidth) - 0.5;
+$(document).mousemove(function (event) {
+  var x_ratio = (event.pageX / (window.innerWidth));
 
-  camera.position.x = Math.sin(x_ratio * Math.PI) * 400;
-  camera.position.z = Math.cos(x_ratio * Math.PI) * 400;
-  camera.rotation.y = Math.sin(x_ratio * Math.PI);
+  // camera.rotation.y = (x_ratio - 0.5) * -3;
+  // camera.rotation.y = 1;
+  // camera.rotation.y = Math.cos((event.pageX / (window.innerWidth*.9)) * Math.PI);
+
+  var y_ratio = (event.pageY / window.innerHeight);
+
+  camera.position.x = Math.cos(x_ratio * Math.PI) * 600; //* Math.sin(y_ratio * Math.PI) * 500;
+  camera.position.z = Math.sin(x_ratio * Math.PI) * 600;
+  camera.rotation.y = (x_ratio - .5) * -3;
 });
 
 // Start the renderer.
@@ -69,12 +75,14 @@ var sphere = new THREE.Mesh(
                           rings),
   sphereMaterial);
 
-sphere.velocity = new THREE.Vector3(1, 1, 1);
+sphere.velocity = new THREE.Vector3(Math.random() * 1,
+                                    Math.random() * 1,
+                                    Math.random() * 1);
 
 var bounds = {
   x: [-150, 150],
-  y: [-110, 110],
-  z: [-300, 0]
+  y: [-150, 150],
+  z: [-150, 150]
 };
 
 var line_material = new THREE.LineBasicMaterial({ color: 0x000000 });
@@ -128,24 +136,24 @@ redraw_box();
 
 function update() {
   // Change directions.
-  if (sphere.position.z === bounds.z[1]) {
+  if (Math.floor(sphere.position.z) === bounds.z[1]-radius) {
     sphere.velocity.z = -1;
-  } else if (sphere.position.z === bounds.z[0]) {
+  } else if (Math.floor(sphere.position.z) === bounds.z[0]+radius) {
     sphere.velocity.z = 1;
   }
 
-  if (sphere.position.x === bounds.x[1]) {
+  if (Math.floor(sphere.position.x) === bounds.x[1]-radius) {
     sphere.velocity.x = -1;
     console.log('x 150');
-  } else if (sphere.position.x === bounds.x[0]) {
+  } else if (Math.floor(sphere.position.x) === bounds.x[0]+radius) {
     sphere.velocity.x = 1;
     console.log('x -150');
   }
 
-  if (sphere.position.y === bounds.y[0]) {
+  if (Math.floor(sphere.position.y) === bounds.y[0]+radius) {
     sphere.velocity.y = 1;
     console.log('y -110');
-  } else if (sphere.position.y === bounds.y[1]) {
+  } else if (Math.floor(sphere.position.y) === bounds.y[1]-radius) {
     sphere.velocity.y = -1;
     console.log('y 110');
   }
@@ -162,9 +170,9 @@ scene.add(sphere);
 
 // Lights!
 var pointLight = new THREE.PointLight(0xFFFFFF);
-pointLight.position.x = 10;
-pointLight.position.y = 50;
-pointLight.position.z = 130;
+pointLight.position.x = bounds.x[1];
+pointLight.position.y = bounds.y[1];
+pointLight.position.z = bounds.z[1];
 
 scene.add(pointLight);
 
