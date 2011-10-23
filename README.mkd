@@ -7,8 +7,8 @@ Every shape has a few basic properties:
 * **Mesh** -- Contains basic attributes of the shape. In the case of a
   sphere, it holds radius, # of segments, # of rings.
 * **Material** -- What is covering the mesh?
-* **Position** -- Pretty self explanatory. Looks to be exclusively
-  cartesian.
+* **Position** -- Pretty self explanatory. Cartesian.
+* **Rotation**
 
 ## Materials
 * Basic Material
@@ -30,3 +30,6 @@ window.requestAnimFrame = (function(){
           };
 })();
 ```
+
+## Lights
+* **Spotlight** -- Can cast shadows. (`THREE.SpotLight`)
